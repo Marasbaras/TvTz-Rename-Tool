@@ -159,6 +159,7 @@ namespace TvTzRenameTool
 
                 //showing all files in the inputlistbox (and outputlistbox initially)
                 fileNames = getFileNames(filePaths);
+                fileNames.Sort();
                 for (int i = 0; i != (fileNames.Count); i++)
                 {
                     fileListBox.Items.Add(fileNames[i]);

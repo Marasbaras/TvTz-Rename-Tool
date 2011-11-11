@@ -1,8 +1,16 @@
-﻿- AAF releases
+﻿	FEATURES:
+- AAF releases
 - Capitalise everything behind the - in a scene release (in case of a unknown group)
 	- Autoadd unknown group ?
 - Search and Replace system on outputfilenames
 	- Maybe with $N for name, $S for season, $E for episode, $T for title, $C for sceneinfo
+- Make EDIT popup grab the origional filename when the new filename is empty.xxxxx.empty (eg, unknown).
+
+	BUGS:
+- american.dad.S05E11.HDTV.XviD-fever.avi
+- multiple Empty.SXXEXX.empty files
+- Battlestar.Galactica.S02E01.Scattered.ws.XviD-TCM (problem with ws beeing 2 chars and / or not getting quality
+- ncis gets renamed to Ncis instead of NCIS -> might have to include this in TVrage api to get proper caps on showname.
 
 	DONE:
 - EDIT output filenames
