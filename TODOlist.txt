@@ -1,0 +1,8 @@
+﻿- AAF releases
+- Capitalise everything behind the - in a scene release (in case of a unknown group)
+	- Autoadd unknown group ?
+- Search and Replace system on outputfilenames
+	- Maybe with $N for name, $S for season, $E for episode, $T for title, $C for sceneinfo
+
+	DONE:
+- EDIT output filenames

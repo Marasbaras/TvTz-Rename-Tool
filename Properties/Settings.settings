@@ -1,0 +1,21 @@
+﻿<?xml version='1.0' encoding='utf-8'?>
+<SettingsFile xmlns="http://schemas.microsoft.com/VisualStudio/2004/01/settings" CurrentProfile="(Default)" GeneratedClassNamespace="TvTzRenameTool.Properties" GeneratedClassName="Settings">
+  <Profiles />
+  <Settings>
+    <Setting Name="Container" Type="System.String" Scope="Application">
+      <Value Profile="(Default)">avi,mpg,mkv,all</Value>
+    </Setting>
+    <Setting Name="SceneName" Type="System.String" Scope="Application">
+      <Value Profile="(Default)">0TV,2HD,433,A4O,aAF,ANARCHY,ANiVCD,ARCHiViST,Argon,BaCKToRG,BAJSKORV,Ballerina,BamHD,BaraTV,BAWLS,BBV,BiA,BiQ,CHwDgB,C0NFUSED,COUNCiL,CREMOSA,CRiMSON,CTU,DGAS,DGX,DiCH,DiFFERENT,DIMENSION,DiSSENT,DOCUMENT,DOT,DRG,E7,ECHOS,ETACH,Football,FoV,FQM,FR34KTV,FTP,GNARLY,GORE,HDCP,HDi,HEH,Hype,IGUANA,iHT,iNBEV,iNCiTE,iNGOT,JMT,JUPiLER,KICKOFF,KYR,LionsDen,LMAO,LoKI,LOL,McCain,MiNT,MiRAGETV,MOMENTUM,MORiCH,MVM,NOsegmenT,NOTV,OCTi,OMiCRON,ORENJi,ORGANiC,OSiTV,PiX,POKERUS,PROXY,PusherCrew,PVR,RAP,REiSERADiO,REMAX,RiVER,RKcTV,RTA,SAiNTS,SFM,SiBV,SiSO,SiTV,SOF,SomeTV,SPAREL,STELLA,SVD,SYS,T33V33,TBS,TCM,TDF,TELEViSiON,TKO,TOKUS,T0nK4,TV/,TvD,TVFi,TVTUPA,TwoPhat,UTOPiA,VCDVaULT,W4F,WaLMaRT,WATERS,WPi,XOR,XOXO,XPRESS,YesTV,YT,0TV,2HD,433,A4O,aAF,ANARCHY,ANiVCD,ARCHiViST,Argon,BaCKToRG,BAJSKORV,Ballerina,BamHD,BaraTV,BAWLS,BBV,BiA,BiQ,CHwDgB,C0NFUSED,COUNCiL,CREMOSA,CRiMSON,CTU,DGAS,DGX,DiCH,DiFFERENT,DIMENSION,DiSSENT,DOCUMENT,DOT,DRG,E7,ECHOS,ETACH,Football,FoV,FQM,FR34KTV,FTP,GNARLY,GORE,HDCP,HDi,HEH,Hype,IGUANA,iHT,iNBEV,iNCiTE,iNGOT,JMT,JUPiLER,KICKOFF,KYR,LionsDen,LMAO,LoKI,LOL,McCain,MiNT,MiRAGETV,MOMENTUM,MORiCH,MVM,NOsegmenT,NOTV,OCTi,OMiCRON,ORENJi,ORGANiC,OSiTV,PiX,POKERUS,PROXY,PusherCrew,PVR,RAP,REiSERADiO,REMAX,RiVER,RKcTV,RTA,SAiNTS,SFM,SiBV,SiSO,SiTV,SOF,SomeTV,SPAREL,STELLA,SVD,SYS,T33V33,TBS,TCM,TDF,TELEViSiON,TKO,TOKUS,T0nK4,TV/,TvD,TVFi,TVTUPA,TwoPhat,UTOPiA,VCDVaULT,W4F,WaLMaRT,WATERS,WPi,XOR,XOXO,XPRESS,YesTV,YT,IMMERSE,ASAP,REWARD</Value>
+    </Setting>
+    <Setting Name="_LogLevel" Type="System.Int32" Scope="Application">
+      <Value Profile="(Default)">3</Value>
+    </Setting>
+    <Setting Name="SceneQuality" Type="System.String" Scope="Application">
+      <Value Profile="(Default)">CAMrip,CAM,TS,TELESYNC,PDVD,WP,WORKPRINT,SCR,SCREENER,DVDSCR,DVDSCREENER,BDSCR,DDC,R5,TC,TELECINE,DVDRip,DVDR,DVD-Rull,Full-Rip,TVRip,DSR,PDTV,HDTV,DVBRip,DTHRip,BDRip,BRRip,BDRip.XviD,1080p-BluRay-x264,720p-BluRay-x264,BDR,BluRay,BD5,BD9,720p,1080p,720i,1080i,PROPER,REPACK</Value>
+    </Setting>
+    <Setting Name="Codec" Type="System.String" Scope="Application">
+      <Value Profile="(Default)">x264,H.261,DivX,XviD</Value>
+    </Setting>
+  </Settings>
+</SettingsFile>
