@@ -1,4 +1,4 @@
-﻿	FEATURES:
+﻿	TODO Features:
 - AAF releases
 - Capitalise everything behind the - in a scene release (in case of a unknown group)
 	- Autoadd unknown group ?
@@ -13,4 +13,4 @@
 - ncis gets renamed to Ncis instead of NCIS -> might have to include this in TVrage api to get proper caps on showname.
 
 	DONE:
-- EDIT output filenames
+- EDIT output filenames -> Rclick in outputbox on filename to bring it up.
