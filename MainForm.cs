@@ -477,12 +477,14 @@ namespace TvTzRenameTool
         {
             List<string> tempContainer = new List<string>(GetSettings("Container"));
             bool bIsContainer = false;
+            int iIsContainer = 0;
             s = s.TrimEnd('-',' ','.');
             for (int iContainer = 0; iContainer < tempContainer.Count; iContainer++)
             {
                 if (s.Contains(tempContainer[iContainer]))
                 {
                     bIsContainer = true;
+                    iIsContainer = tempContainer[iContainer].Length;
                 }
             }
             if (bIsContainer == true && s.Length == 3)
@@ -516,7 +518,7 @@ namespace TvTzRenameTool
             }
             // Scan through the letters, checking for spaces.
             // ... Uppercase the lowercase letters following spaces.
-            for (int i = 1; i < array.Length - 4; i++)
+            for (int i = 1; i < array.Length - iIsContainer; i++)
             {
                 if (array[i - 1] == ' ')
                 {
