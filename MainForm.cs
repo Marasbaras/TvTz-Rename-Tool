@@ -110,6 +110,7 @@ namespace TvTzRenameTool
             }
             fileTypeBox.SelectedIndex = 0;
             TestOutput.Enabled = false;
+            TestSR.Enabled = false;
             DoRename.Enabled = false;
 
             //temp debugmode enable's for development
@@ -166,6 +167,7 @@ namespace TvTzRenameTool
                     //outputListBox.Items.Add(FileNames[i]);
                 }
                 TestOutput.Enabled = true;
+                TestSR.Enabled = true;
                 DoRename.Enabled = false;
                 editToolStripMenuItem.Enabled = false;
                 copyToolStripMenuItem.Enabled = false;
@@ -185,10 +187,42 @@ namespace TvTzRenameTool
             BackgroundOutput.RunWorkerAsync();
             progressBar.Value = 0;
         }
+        private void TestSR_Click(object sender, EventArgs e)
+        {
+            //getting search and replace texts
+            string sSearch = textBoxSearch.Text.ToString();
+            string sReplace = textBoxReplace.Text.ToString();
+            toolStripStatusLabel1.Text = "Starting Search / Replace ...";
+            //getting new filenames if they dont exist yet and populate the output filebox.
+            if (outputListBox.Items.Count == 0)
+            {
+                newFileNames.Clear();
+                newFileNames.AddRange(fileNames);
+                UpdateOutputListBox(newFileNames);
+            }
+            //funtimes with loops and redraw
+
+            for (int i = 0; i != (newFileNames.Count); i++)
+            {
+                newFileNames[i] = newFileNames[i].Replace(sSearch, sReplace);
+            }
+            editToolStripMenuItem.Enabled = true;
+            copyToolStripMenuItem.Enabled = true;
+            UpdateOutputListBox(newFileNames);
+        }
+
         #endregion
 
 
         #region stringmanipulation
+        private void UpdateOutputListBox(List<string> s)
+        {
+            outputListBox.Items.Clear();
+            for (int i = 0; i != (s.Count); i++)
+            {
+                outputListBox.Items.Add(s[i]);
+            }
+        }
 
         private string removeSceneFromEpName(string fullName, string epName, List<string> sceneNames, List<string> sceneQuality, List<string> sceneCodec)
         {
@@ -949,10 +983,12 @@ namespace TvTzRenameTool
             {
                 DoRename.Enabled = true;
                 TestOutput.Enabled = true;
+                TestSR.Enabled = true;
             }
             else
             {
                 DoRename.Enabled = false;
+                TestSR.Enabled = false;
                 TestOutput.Enabled = false;
             }
             progressBar.Value = e.ProgressPercentage;

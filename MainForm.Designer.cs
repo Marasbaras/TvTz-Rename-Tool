@@ -62,6 +62,9 @@
             this.label5 = new System.Windows.Forms.Label();
             this.label6 = new System.Windows.Forms.Label();
             this.generateMoveCB1 = new System.Windows.Forms.CheckBox();
+            this.textBoxSearch = new System.Windows.Forms.TextBox();
+            this.textBoxReplace = new System.Windows.Forms.TextBox();
+            this.TestSR = new System.Windows.Forms.Button();
             this.statusStrip1.SuspendLayout();
             this.menuStrip1.SuspendLayout();
             this.contextMenuStrip1.SuspendLayout();
@@ -69,9 +72,9 @@
             // 
             // TestOutput
             // 
-            this.TestOutput.Location = new System.Drawing.Point(342, 488);
+            this.TestOutput.Location = new System.Drawing.Point(343, 513);
             this.TestOutput.Name = "TestOutput";
-            this.TestOutput.Size = new System.Drawing.Size(100, 23);
+            this.TestOutput.Size = new System.Drawing.Size(95, 23);
             this.TestOutput.TabIndex = 0;
             this.TestOutput.Text = "Test";
             this.TestOutput.UseVisualStyleBackColor = true;
@@ -125,7 +128,7 @@
             // 
             this.statusStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.toolStripStatusLabel1});
-            this.statusStrip1.Location = new System.Drawing.Point(0, 558);
+            this.statusStrip1.Location = new System.Drawing.Point(0, 576);
             this.statusStrip1.Name = "statusStrip1";
             this.statusStrip1.Size = new System.Drawing.Size(894, 22);
             this.statusStrip1.TabIndex = 16;
@@ -201,7 +204,7 @@
             // 
             // DoRename
             // 
-            this.DoRename.Location = new System.Drawing.Point(342, 513);
+            this.DoRename.Location = new System.Drawing.Point(342, 536);
             this.DoRename.Name = "DoRename";
             this.DoRename.Size = new System.Drawing.Size(200, 23);
             this.DoRename.TabIndex = 22;
@@ -212,7 +215,7 @@
             // checkBoxTVrageLookup
             // 
             this.checkBoxTVrageLookup.AutoSize = true;
-            this.checkBoxTVrageLookup.Location = new System.Drawing.Point(12, 471);
+            this.checkBoxTVrageLookup.Location = new System.Drawing.Point(12, 491);
             this.checkBoxTVrageLookup.Name = "checkBoxTVrageLookup";
             this.checkBoxTVrageLookup.Size = new System.Drawing.Size(190, 17);
             this.checkBoxTVrageLookup.TabIndex = 23;
@@ -223,7 +226,7 @@
             // label4
             // 
             this.label4.AutoSize = true;
-            this.label4.Location = new System.Drawing.Point(9, 444);
+            this.label4.Location = new System.Drawing.Point(9, 464);
             this.label4.Name = "label4";
             this.label4.Size = new System.Drawing.Size(89, 13);
             this.label4.TabIndex = 24;
@@ -234,7 +237,7 @@
             this.checkBoxKeepScene.AutoSize = true;
             this.checkBoxKeepScene.Checked = true;
             this.checkBoxKeepScene.CheckState = System.Windows.Forms.CheckState.Checked;
-            this.checkBoxKeepScene.Location = new System.Drawing.Point(12, 494);
+            this.checkBoxKeepScene.Location = new System.Drawing.Point(12, 517);
             this.checkBoxKeepScene.Name = "checkBoxKeepScene";
             this.checkBoxKeepScene.Size = new System.Drawing.Size(103, 17);
             this.checkBoxKeepScene.TabIndex = 25;
@@ -244,7 +247,7 @@
             // 
             // progressBar
             // 
-            this.progressBar.Location = new System.Drawing.Point(-9, 545);
+            this.progressBar.Location = new System.Drawing.Point(-9, 565);
             this.progressBar.Name = "progressBar";
             this.progressBar.Size = new System.Drawing.Size(907, 10);
             this.progressBar.TabIndex = 26;
@@ -262,7 +265,7 @@
             this.copyToolStripMenuItem,
             this.editToolStripMenuItem});
             this.contextMenuStrip1.Name = "contextMenuStrip1";
-            this.contextMenuStrip1.Size = new System.Drawing.Size(103, 50);
+            this.contextMenuStrip1.Size = new System.Drawing.Size(103, 48);
             // 
             // copyToolStripMenuItem
             // 
@@ -290,7 +293,7 @@
             // checkBoxCopy
             // 
             this.checkBoxCopy.AutoSize = true;
-            this.checkBoxCopy.Location = new System.Drawing.Point(200, 517);
+            this.checkBoxCopy.Location = new System.Drawing.Point(200, 540);
             this.checkBoxCopy.Name = "checkBoxCopy";
             this.checkBoxCopy.RightToLeft = System.Windows.Forms.RightToLeft.Yes;
             this.checkBoxCopy.Size = new System.Drawing.Size(137, 17);
@@ -301,7 +304,7 @@
             // removeEpInfo
             // 
             this.removeEpInfo.AutoSize = true;
-            this.removeEpInfo.Location = new System.Drawing.Point(12, 517);
+            this.removeEpInfo.Location = new System.Drawing.Point(12, 540);
             this.removeEpInfo.Name = "removeEpInfo";
             this.removeEpInfo.Size = new System.Drawing.Size(139, 17);
             this.removeEpInfo.TabIndex = 28;
@@ -321,7 +324,7 @@
             // label6
             // 
             this.label6.AutoSize = true;
-            this.label6.Location = new System.Drawing.Point(197, 444);
+            this.label6.Location = new System.Drawing.Point(197, 464);
             this.label6.Name = "label6";
             this.label6.Size = new System.Drawing.Size(63, 13);
             this.label6.TabIndex = 30;
@@ -331,7 +334,7 @@
             // 
             this.generateMoveCB1.AutoSize = true;
             this.generateMoveCB1.Enabled = false;
-            this.generateMoveCB1.Location = new System.Drawing.Point(197, 494);
+            this.generateMoveCB1.Location = new System.Drawing.Point(197, 517);
             this.generateMoveCB1.Name = "generateMoveCB1";
             this.generateMoveCB1.RightToLeft = System.Windows.Forms.RightToLeft.Yes;
             this.generateMoveCB1.Size = new System.Drawing.Size(140, 17);
@@ -339,11 +342,42 @@
             this.generateMoveCB1.Text = "Generate move batches";
             this.generateMoveCB1.UseVisualStyleBackColor = true;
             // 
+            // textBoxSearch
+            // 
+            this.textBoxSearch.Location = new System.Drawing.Point(447, 448);
+            this.textBoxSearch.Name = "textBoxSearch";
+            this.textBoxSearch.Size = new System.Drawing.Size(430, 20);
+            this.textBoxSearch.TabIndex = 32;
+            this.textBoxSearch.Text = "Search";
+            this.textBoxSearch.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
+            // 
+            // textBoxReplace
+            // 
+            this.textBoxReplace.Location = new System.Drawing.Point(447, 478);
+            this.textBoxReplace.Name = "textBoxReplace";
+            this.textBoxReplace.Size = new System.Drawing.Size(430, 20);
+            this.textBoxReplace.TabIndex = 33;
+            this.textBoxReplace.Text = "Replace";
+            this.textBoxReplace.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
+            // 
+            // TestSR
+            // 
+            this.TestSR.Location = new System.Drawing.Point(447, 513);
+            this.TestSR.Name = "TestSR";
+            this.TestSR.Size = new System.Drawing.Size(95, 23);
+            this.TestSR.TabIndex = 34;
+            this.TestSR.Text = "Test";
+            this.TestSR.UseVisualStyleBackColor = true;
+            this.TestSR.Click += new System.EventHandler(this.TestSR_Click);
+            // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(894, 580);
+            this.ClientSize = new System.Drawing.Size(894, 598);
+            this.Controls.Add(this.textBoxReplace);
+            this.Controls.Add(this.TestSR);
+            this.Controls.Add(this.textBoxSearch);
             this.Controls.Add(this.generateMoveCB1);
             this.Controls.Add(this.label6);
             this.Controls.Add(this.label5);
@@ -415,6 +449,9 @@
         private System.Windows.Forms.Label label5;
         private System.Windows.Forms.Label label6;
         private System.Windows.Forms.CheckBox generateMoveCB1;
+        private System.Windows.Forms.TextBox textBoxSearch;
+        private System.Windows.Forms.TextBox textBoxReplace;
+        private System.Windows.Forms.Button TestSR;
     }
 }
 
