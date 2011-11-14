@@ -66,6 +66,8 @@ namespace TvTzRenameTool
             xmlDoc.Load(URLString);
             XmlNode titleNode = xmlDoc.SelectSingleNode("//show/episode/title");
             if (titleNode != null) webName = titleNode.InnerText;
+            XmlNode showNode = xmlDoc.SelectSingleNode("//show/name");
+            if (showNode != null) webShow = showNode.InnerText;
 
             /*
             if (PageContent.Contains("No Show Results Were Found") | PageContent.Contains("Error") | PageContent.Contains("Unavailable") | PageContent.Contains("Maintenance"))
@@ -74,18 +76,28 @@ namespace TvTzRenameTool
                 webName = "";
             }
             */
-            webName = Regex.Replace(webName, @"[%?:\/*""<>|]", ".");
-            webName = setSeperator(webName, '.');
+            webName = SanitizeName(webName, 1);
+            webShow = SanitizeName(webShow, 2);
+        }
+        private string SanitizeName(string s, int type)
+        {
+            //type 1 for episodename, type 2 for showname (where showname does not need the initial . at the start of the name)
+            s = Regex.Replace(s, @"[%?:\/*""<>|]", ".");
+            s = setSeperator(s, '.', type);
+            return s;
         }
 
-        private string setSeperator(string s, char seperator)
+        private string setSeperator(string s, char seperator, int type)
         {
-            if (!s.StartsWith("."))
+            if (type == 1)
             {
-                s = "." + s;
+                if (!s.StartsWith("."))
+                {
+                    s = "." + s;
+                }
             }
             StringBuilder b = new StringBuilder(s);
-            b.Replace(" ", ".");
+            b.Replace(" ", seperator.ToString());
             return b.ToString();
         }
         #endregion

@@ -190,18 +190,6 @@ namespace TvTzRenameTool
 
         #region stringmanipulation
 
-        private string getEpisodeName(string show, string season, string episode)
-        {
-            string episodeName = "";
-
-            WebGet tvrageApiInterface = new WebGet("tmp", "tmp", "tmp");
-            tvrageApiInterface.ConsultTVrage(show, season, episode);
-            Debug.WriteLine(tvrageApiInterface.webName);
-            episodeName = tvrageApiInterface.webName;
-
-            return episodeName;
-        }
-
         private string removeSceneFromEpName(string fullName, string epName, List<string> sceneNames, List<string> sceneQuality, List<string> sceneCodec)
         {
             fullName = ReplaceChars(fullName, ' ', '.');
@@ -608,6 +596,30 @@ namespace TvTzRenameTool
             isValidNumeric = int.TryParse(chkNumeric, out intOutVal);
             return isValidNumeric;
         }
+
+        private string CapsShowName(string inputShowname, List<string> capsShows) //###
+        {
+            string outputShowname = "";
+            List<string> lShow = new List<string>(inputShowname.Split('.'));
+            if (lShow[lShow.Count-1] == "") 
+            {
+                lShow.RemoveAt(lShow.Count-1);
+            }
+            for (int i = 0; i != (lShow.Count); i++)
+            {
+                for (int j = 0; j != (capsShows.Count); j++)
+                {
+                    if (lShow[i].IndexOf(capsShows[j], StringComparison.InvariantCultureIgnoreCase) != -1 && lShow[i].Length == capsShows[j].Length)
+                    {
+                        lShow[i] = lShow[i].ToUpper();
+                    }
+                }
+                outputShowname = outputShowname + lShow[i].ToString() + ".";
+            }
+            
+            return outputShowname;
+        }
+
         #endregion
 
 
@@ -631,6 +643,7 @@ namespace TvTzRenameTool
                 if (SettingType == "SceneName") setting = Properties.Settings.Default.SceneName.Split(',');
                 if (SettingType == "SceneQuality") setting = Properties.Settings.Default.SceneQuality.Split(',');
                 if (SettingType == "Codec") setting = Properties.Settings.Default.Codec.Split(',');
+                if (SettingType == "ShowName") setting = Properties.Settings.Default.ShowName.Split(',');
             }
             catch (InvalidCastException e)
             {
@@ -756,6 +769,9 @@ namespace TvTzRenameTool
             List<string> codecs = new List<string>(GetSettings("Codec"));
             Debug.WriteLine("Loaded: " + sceneQuality.Count + " Codecs");
             Logger.logError("Loaded: " + sceneQuality.Count + " Codecs", 1);
+            List<string> showNames = new List<string>(GetSettings("ShowName"));
+            Debug.WriteLine("Loaded: " + showNames.Count + " Codecs");
+            Logger.logError("Loaded: " + showNames.Count + " CAPS only Show Names", 1);
 
             SplitEngine fileInfo = new SplitEngine(newFileNames[0]);
             string tempName, tempSeason, tempEpisode, tempEpScene;
@@ -771,6 +787,10 @@ namespace TvTzRenameTool
                 {
 
                     tempName = (UppercaseFirst(fileInfo.Name));
+                    if (checkBoxTVrageLookup.Checked == false)
+                    {
+                        tempName = CapsShowName(tempName, showNames);
+                    }
                     Logger.logError("After split and cleanup, ShowName " + tempName, 1);
                     tempSeason = CorrectSeasonNumbering(fileInfo.Season);
                     Logger.logError("After split and cleanup, Season " + tempSeason, 1);
@@ -780,11 +800,18 @@ namespace TvTzRenameTool
                     //escaping into API lookup before the filename lookup/check
                     if (checkBoxTVrageLookup.Checked == true)
                     {
-                        tempEpScene = UppercaseFirst(getEpisodeName(tempName, tempSeason, tempEpisode));
-
+                        WebGet tvrageApiInterface = new WebGet("tmp", "tmp", "tmp");
+                        tvrageApiInterface.ConsultTVrage(tempName, tempSeason, tempEpisode);
+                        tempEpScene = UppercaseFirst(tvrageApiInterface.webName);
+                        tempName = UppercaseFirst(tvrageApiInterface.webShow);
+                        
                         if (tempEpScene.Length <= 0)
                         {
                             MessageBox.Show("It seems TVrage doesnt know the episode for " + tempName + "check the log for more information");
+                        }
+                        else if (tempName.Length <= 0)
+                        {
+                            MessageBox.Show("It seems TVrage doesnt know the show for " + tempName + "check the log for more information");
                         }
 
                         if (checkBoxKeepScene.Checked == true)

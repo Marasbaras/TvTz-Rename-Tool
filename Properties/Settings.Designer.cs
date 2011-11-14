@@ -67,5 +67,15 @@ namespace TvTzRenameTool.Properties {
                 return ((string)(this["Codec"]));
             }
         }
+        
+        [global::System.Configuration.ApplicationScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("ALF,CSI,CSI NY,DEA,FLCL,JAG,CI,SVU,UK,USA,MAD,MASH,NCIS,QI,XL,II,NYC,UFC,UFO,WWE," +
+            "PPV,RAW,HD,XIII")]
+        public string ShowName {
+            get {
+                return ((string)(this["ShowName"]));
+            }
+        }
     }
 }

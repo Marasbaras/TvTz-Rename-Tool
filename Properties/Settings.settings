@@ -17,5 +17,8 @@
     <Setting Name="Codec" Type="System.String" Scope="Application">
       <Value Profile="(Default)">x264,H.261,DivX,XviD</Value>
     </Setting>
+    <Setting Name="ShowName" Type="System.String" Scope="Application">
+      <Value Profile="(Default)">ALF,CSI,CSI NY,DEA,FLCL,JAG,CI,SVU,UK,USA,MAD,MASH,NCIS,QI,XL,II,NYC,UFC,UFO,WWE,PPV,RAW,HD,XIII</Value>
+    </Setting>
   </Settings>
 </SettingsFile>
