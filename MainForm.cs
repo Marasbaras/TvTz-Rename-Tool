@@ -767,43 +767,51 @@ namespace TvTzRenameTool
                 //doing the actual splitting
                 fileInfo.Split(newFileNames[i]);
 
-                tempName = (UppercaseFirst(fileInfo.Name));
-                Logger.logError("After split and cleanup, ShowName " + tempName, 1);
-                tempSeason = CorrectSeasonNumbering(fileInfo.Season);
-                Logger.logError("After split and cleanup, Season " + tempSeason, 1);
-                tempEpisode = (CorrectEpisodeNumbering(fileInfo.Ep));
-                Logger.logError("After split and cleanup, Episode " + tempEpisode, 1);
-
-                //escaping into API lookup before the filename lookup/check
-                if (checkBoxTVrageLookup.Checked == true)
+                if (fileInfo.Result.Contains("ok") && fileInfo.Result.Length < 3)
                 {
-                    tempEpScene = UppercaseFirst(getEpisodeName(tempName, tempSeason, tempEpisode));
 
-                    if (tempEpScene.Length <= 0)
-                    {
-                        MessageBox.Show("It seems TVrage doesnt know the episode for " + tempName + "check the log for more information");
-                    }
+                    tempName = (UppercaseFirst(fileInfo.Name));
+                    Logger.logError("After split and cleanup, ShowName " + tempName, 1);
+                    tempSeason = CorrectSeasonNumbering(fileInfo.Season);
+                    Logger.logError("After split and cleanup, Season " + tempSeason, 1);
+                    tempEpisode = (CorrectEpisodeNumbering(fileInfo.Ep));
+                    Logger.logError("After split and cleanup, Episode " + tempEpisode, 1);
 
-                    if (checkBoxKeepScene.Checked == true)
+                    //escaping into API lookup before the filename lookup/check
+                    if (checkBoxTVrageLookup.Checked == true)
                     {
-                        tempEpScene = tempEpScene + removeSceneFromEpName(fileInfo.Show, tempEpScene, sceneNames, sceneQuality, codecs);
+                        tempEpScene = UppercaseFirst(getEpisodeName(tempName, tempSeason, tempEpisode));
+
+                        if (tempEpScene.Length <= 0)
+                        {
+                            MessageBox.Show("It seems TVrage doesnt know the episode for " + tempName + "check the log for more information");
+                        }
+
+                        if (checkBoxKeepScene.Checked == true)
+                        {
+                            tempEpScene = tempEpScene + removeSceneFromEpName(fileInfo.Show, tempEpScene, sceneNames, sceneQuality, codecs);
+                        }
+                        else
+                        {
+                            tempEpScene = tempEpScene + fileNames[i].Substring(fileNames[i].Length - 3);
+                        }
+
+                        ;
                     }
                     else
                     {
-                        tempEpScene = tempEpScene + fileNames[i].Substring(fileNames[i].Length - 3);
+                        //tempEpScene = (EpisodeAndScene(fileInfo.Show, sceneNames, sceneQuality, codecs));
+                        tempEpScene = removeSceneFromEpName(fileInfo.Show, "none", sceneNames, sceneQuality, codecs);
                     }
+                    Logger.logError("After split and cleanup, Epname+Sceneinfo " + tempEpScene, 1);
 
-;
+                    newFileNames[i] = tempName + tempSeason + tempEpisode + tempEpScene;
                 }
                 else
                 {
-                    //tempEpScene = (EpisodeAndScene(fileInfo.Show, sceneNames, sceneQuality, codecs));
-                    tempEpScene = removeSceneFromEpName(fileInfo.Show, "none", sceneNames, sceneQuality, codecs);
+                    newFileNames[i] = fileInfo.Result;
+                    MessageBox.Show("Unable to split " + newFileNames[i] + " keeping origional filename, rename manually");
                 }
-                Logger.logError("After split and cleanup, Epname+Sceneinfo " + tempEpScene, 1);
-
-                newFileNames[i] = tempName + tempSeason + tempEpisode + tempEpScene;
-
                 //Moving the progress bar
                 progress++;
                 double dIndex = (double)progress;

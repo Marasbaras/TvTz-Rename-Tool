@@ -38,7 +38,11 @@ namespace TvTzRenameTool
             get;
             private set;
         }
-
+        public string Result
+        {
+            get;
+            private set;
+        }
 
         #endregion
 
@@ -60,6 +64,7 @@ namespace TvTzRenameTool
         public void Split(string fileName)
         {
             int regexMatch = 0;
+            Result = null;
             List<string> epName = new List<string>();
             //string[] epName = new string[5]; 
             //finds: 3x23 s3x23 3e23 s3e23 s04e01e02e03 *(and capital letters)
@@ -126,22 +131,35 @@ namespace TvTzRenameTool
 
             if (epName.Count != 4)
             {
-                Logger.logError("Error, got more results from the regex split then allowed (4), will continue, but results are probably wrong", 4);
+                Logger.logError("Error, got different results from the regex split then allowed (4), will continue, but results are probably wrong", 4);
                 if (epName.Count == 3)
                 {
                     epName[3] = "empty";
                 }
+                else
+                {
+                    Result = fileName;
+                }
             }
             //quick and dirty fix for example deads01E02rest, this will make the regex split to 5, containing, deads + 0 + 1 + E02 + rest.
-            if (epName[1] == "0" | epName[1] == "00" && epName.Count == 5)
+            if (epName.Count == 5 && epName[1] == "0" | epName[1] == "00")
             {
                 epName.RemoveAt(1);
             }
 
-            Name = epName[0];
-            Season = epName[1];
-            Ep = epName[2];
-            Show = epName[3];
+            if (Result != null)
+            {
+                Logger.logError("Ugh, something went wrong, maybe a filename without season and episode numbering ? returning input filename: " + Result, 4);
+            }
+            else
+            {
+                Result = "ok";
+                Name = epName[0];
+                Season = epName[1];
+                Ep = epName[2];
+                Show = epName[3];
+            }
+            
         }
 
         #endregion

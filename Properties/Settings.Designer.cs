@@ -52,7 +52,7 @@ namespace TvTzRenameTool.Properties {
         
         [global::System.Configuration.ApplicationScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute(@"CAMrip,CAM,TS,TELESYNC,PDVD,WP,WORKPRINT,SCR,SCREENER,DVDSCR,DVDSCREENER,BDSCR,DDC,R5,TC,TELECINE,DVDRip,DVDR,DVD-Rull,Full-Rip,TVRip,DSR,PDTV,HDTV,DVBRip,DTHRip,BDRip,BRRip,BDRip.XviD,1080p-BluRay-x264,720p-BluRay-x264,BDR,BluRay,BD5,BD9,720p,1080p,720i,1080i,PROPER,REPACK")]
+        [global::System.Configuration.DefaultSettingValueAttribute(@"CAMrip,CAM,TS,TELESYNC,PDVD,WP,WORKPRINT,SCR,SCREENER,DVDSCR,DVDSCREENER,BDSCR,DDC,R5,TC,TELECINE,DVDRip,DVDR,DVD-Rull,Full-Rip,TVRip,DSR,PDTV,HDTV,DVBRip,DTHRip,BDRip,BRRip,BDRip.XviD,1080p-BluRay-x264,720p-BluRay-x264,BDR,BluRay,BD5,BD9,720p,1080p,720i,1080i,PROPER,REPACK,WS")]
         public string SceneQuality {
             get {
                 return ((string)(this["SceneQuality"]));
