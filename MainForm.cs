@@ -26,6 +26,7 @@ namespace TvTzRenameTool
         //public string[] SeasonEpisode;
         public List<string> filePaths = new List<string>();
         public string dir;
+        public Stopwatch sw = new Stopwatch();
         #endregion
 
 
@@ -61,10 +62,7 @@ namespace TvTzRenameTool
             {
                 newFileNames[outputListBox.SelectedIndex] = MainForm.GetFromUser(outputListBox.SelectedItem.ToString());
                 outputListBox.Items.Clear();
-                for (int i = 0; i != (newFileNames.Count); i++)
-                {
-                    outputListBox.Items.Add(newFileNames[i]);
-                }
+                UpdateOutputListBox(newFileNames);
             }
 
         }
@@ -158,13 +156,12 @@ namespace TvTzRenameTool
                 fileListBox.Items.Clear();
                 outputListBox.Items.Clear();
 
-                //showing all files in the inputlistbox (and outputlistbox initially)
+                //showing all files in the inputlistbox
                 fileNames = getFileNames(filePaths);
                 fileNames.Sort();
                 for (int i = 0; i != (fileNames.Count); i++)
                 {
                     fileListBox.Items.Add(fileNames[i]);
-                    //outputListBox.Items.Add(FileNames[i]);
                 }
                 TestOutput.Enabled = true;
                 TestSR.Enabled = true;
@@ -734,16 +731,23 @@ namespace TvTzRenameTool
                 string result = "ok";
                 try
                 {
+                    toolStripStatusLabel1.Text = "Checking TVrage connection and speed, hold on, this might take a while ...";
+                    this.Update();
+                    sw.Reset();
+                    sw.Start();
                     WebGet tvrageApiInterface = new WebGet("The Walking Dead", "01", "01");
                     tvrageApiInterface.ConsultTVrage("The Walking Dead", "01", "01");
                     result = tvrageApiInterface.webName;
+                    sw.Stop();
+                    decimal dSeconds = sw.ElapsedMilliseconds / 1000M;
                     if (result != "")
                     {
-                        toolStripStatusLabel1.Text = "Internet Test: You got internet and TVrage is up ! what a wonderful day to be a renamer !";
+                        toolStripStatusLabel1.Text = "Managed to get a sane result from TVrage, time for 1 filename is " + dSeconds.ToString() +" seconds.";
                     }
                 }
                 catch (Exception ex)
                 {
+                    sw.Stop();
                     if (ex.Message.Contains("could not be resolved"))
                     {
                         MessageBox.Show("No connection to TVrage API, do you have internet connection ? else, TVrage might be down");
@@ -809,6 +813,7 @@ namespace TvTzRenameTool
 
             SplitEngine fileInfo = new SplitEngine(newFileNames[0]);
             string tempName, tempSeason, tempEpisode, tempEpScene;
+            sw.Reset();
           
             for (int i = 0; i != (newFileNames.Count); i++)
             {
@@ -834,10 +839,20 @@ namespace TvTzRenameTool
                     //escaping into API lookup before the filename lookup/check
                     if (checkBoxTVrageLookup.Checked == true)
                     {
+                        sw.Start();                        
                         WebGet tvrageApiInterface = new WebGet("tmp", "tmp", "tmp");
                         tvrageApiInterface.ConsultTVrage(tempName, tempSeason, tempEpisode);
+                        sw.Stop();
+                        if (tvrageApiInterface.webName == "error")
+                        {
+                            MessageBox.Show("hmmm, timeout on TVrage for " + newFileNames[i] + ", or some other error, doing it manually, no episode lookup");
+                            tempEpScene = removeSceneFromEpName(fileInfo.Show, "none", sceneNames, sceneQuality, codecs);
+                        }
+                        else
+                        {
                         tempEpScene = UppercaseFirst(tvrageApiInterface.webName);
                         tempName = UppercaseFirst(tvrageApiInterface.webShow);
+                        }
                         
                         if (tempEpScene.Length <= 0)
                         {
@@ -892,7 +907,16 @@ namespace TvTzRenameTool
 
         private void BackgroundOutput_RunWorkerComplete(object sender, RunWorkerCompletedEventArgs e)
         {
-            toolStripStatusLabel1.Text = "Finished preparing the rename !";
+            if (checkBoxTVrageLookup.Checked == true)
+            {
+                decimal dSeconds = sw.ElapsedMilliseconds / 1000M;
+                decimal dSecPerEp = dSeconds / newFileNames.Count;
+                toolStripStatusLabel1.Text = "Finished preparing the rename ! it took " + dSeconds.ToString() + " seconds, " + dSecPerEp.ToString() + " Seconds average per file (to lookup at TVrage)";
+            }
+            else
+            {
+                toolStripStatusLabel1.Text = "Finished preparing the rename !";
+            }
             DoRename.Enabled = true;
             editToolStripMenuItem.Enabled = true;
             copyToolStripMenuItem.Enabled = true;

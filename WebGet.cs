@@ -62,13 +62,30 @@ namespace TvTzRenameTool
             season = season.TrimStart('S');
 
             string URLString = "http://services.tvrage.com/myfeeds/episodeinfo.php?key=pF7fdBwtutbXFwfr9g5K&show=" + episode + "&exact=0&ep=" + season + "x" + epnr;
-            XmlDocument xmlDoc = new XmlDocument();
-            xmlDoc.Load(URLString);
-            XmlNode titleNode = xmlDoc.SelectSingleNode("//show/episode/title");
-            if (titleNode != null) webName = titleNode.InnerText;
-            XmlNode showNode = xmlDoc.SelectSingleNode("//show/name");
-            if (showNode != null) webShow = showNode.InnerText;
 
+            try
+            {
+
+                XmlDocument xmlDoc = new XmlDocument();
+                xmlDoc.Load(URLString);
+                XmlNode titleNode = xmlDoc.SelectSingleNode("//show/episode/title");
+                if (titleNode != null) webName = titleNode.InnerText;
+                XmlNode showNode = xmlDoc.SelectSingleNode("//show/name");
+                if (showNode != null) webShow = showNode.InnerText;
+            }
+            catch (Exception e)
+            {
+                if (e.Message.Contains("Unable to connect to the remote server"))
+                {
+                    Logger.logError("TVrage api is down, stacktrace: " + e.ToString() + " searched for " + URLString, 3);
+                }
+                else
+                {
+                    Logger.logError("Holy hell, something went wrong with getting stuff from Tvrage, stacktrace " + e.ToString() + " searched for " + URLString, 3);
+                }
+                webName = "error";
+                webShow = "error";
+            }
             /*
             if (PageContent.Contains("No Show Results Were Found") | PageContent.Contains("Error") | PageContent.Contains("Unavailable") | PageContent.Contains("Maintenance"))
             {
