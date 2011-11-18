@@ -65,7 +65,7 @@ namespace TvTzRenameTool
 
             try
             {
-
+                //serialiser ### todo
                 XmlDocument xmlDoc = new XmlDocument();
                 xmlDoc.Load(URLString);
                 XmlNode titleNode = xmlDoc.SelectSingleNode("//show/episode/title");

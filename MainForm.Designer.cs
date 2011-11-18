@@ -65,6 +65,7 @@
             this.textBoxSearch = new System.Windows.Forms.TextBox();
             this.textBoxReplace = new System.Windows.Forms.TextBox();
             this.TestSR = new System.Windows.Forms.Button();
+            this.backgroundWorker1 = new System.ComponentModel.BackgroundWorker();
             this.statusStrip1.SuspendLayout();
             this.menuStrip1.SuspendLayout();
             this.contextMenuStrip1.SuspendLayout();
@@ -452,6 +453,7 @@
         private System.Windows.Forms.TextBox textBoxSearch;
         private System.Windows.Forms.TextBox textBoxReplace;
         private System.Windows.Forms.Button TestSR;
+        private System.ComponentModel.BackgroundWorker backgroundWorker1;
     }
 }
 

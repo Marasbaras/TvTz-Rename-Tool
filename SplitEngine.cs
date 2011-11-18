@@ -142,12 +142,12 @@ namespace TvTzRenameTool
                 }
             }
             //quick and dirty fix for example deads01E02rest, this will make the regex split to 5, containing, deads + 0 + 1 + E02 + rest.
-            if (epName.Count == 5 && epName[1] == "0" | epName[1] == "00")
+            if (epName.Count == 5 && epName[1] == "0" | epName[1] == "00" | epName[1] == "[" | epName[1] == "(")
             {
                 epName.RemoveAt(1);
             }
 
-            if (Result != null)
+            if (Result != null && epName.Count != 4)
             {
                 Logger.logError("Ugh, something went wrong, maybe a filename without season and episode numbering ? returning input filename: " + Result, 4);
             }

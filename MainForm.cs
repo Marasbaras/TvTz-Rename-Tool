@@ -67,6 +67,36 @@ namespace TvTzRenameTool
 
         }
 
+        private void fileListBox_DragEnter(object sender, DragEventArgs e)
+        {
+            if (e.Data.GetDataPresent(DataFormats.FileDrop))
+                e.Effect = DragDropEffects.Copy;
+            else
+                e.Effect = DragDropEffects.None; 
+        }
+
+        public bool IsFolder(string path)
+        {
+            return ((File.GetAttributes(path) & FileAttributes.Directory) == FileAttributes.Directory);
+        }
+
+        private void fileListBox_DragDrop(object sender, DragEventArgs e)
+        {
+            string[] DropContents = (string[])e.Data.GetData(DataFormats.FileDrop, false);
+            List<string> Droplist = new List<string>(DropContents);
+            if (Droplist.Count == 1 && Droplist[0] != "" && IsFolder(Droplist[0]))
+            {
+                FolderTextBox.Text = Droplist[0].ToString();
+                FolderTextBox.Text.Replace(@"\\", @"\");
+                LoadFolder.PerformClick();
+            }
+            else
+            {
+                MessageBox.Show("Im sorry, only drag and drop of folders is allowed, not single files");
+            }
+        }
+
+
         public static string GetFromUser(string originalValue)
         {
             using (EditForm form = new EditForm())
@@ -91,6 +121,10 @@ namespace TvTzRenameTool
         }
         private void Form1_Load(object sender, EventArgs e)
         {
+            //allow drag&drop of folder
+            this.fileListBox.AllowDrop = true;
+            this.fileListBox.DragEnter += new DragEventHandler(fileListBox_DragEnter);
+            this.fileListBox.DragDrop += new DragEventHandler(fileListBox_DragDrop);
 
                 Logger.logError("Debugmode on, you wuss", 1);
 
@@ -223,8 +257,11 @@ namespace TvTzRenameTool
 
         private string removeSceneFromEpName(string fullName, string epName, List<string> sceneNames, List<string> sceneQuality, List<string> sceneCodec)
         {
+            fullName = Regex.Replace(fullName, @"[^a-zA-Z0-9\.\-\s]", "");
             fullName = ReplaceChars(fullName, ' ', '.');
-            fullName = fullName.Replace("'", "");
+            //fullName = fullName.Replace("'", "");
+            //fullName = fullName.Replace(",", "");
+            fullName = fullName.Replace(".-.", ".");
             fullName = fullName.TrimStart('.', ',', '-');
             if (epName != "none")
             {
@@ -522,6 +559,7 @@ namespace TvTzRenameTool
             }
             StringBuilder b = new StringBuilder(s);
             b.Replace(".", " ");
+            b.Replace(",", " ");
             b.Replace("_", " ");
             b.Replace("  ", " ");
             b.Replace("'", "");
@@ -1038,7 +1076,6 @@ namespace TvTzRenameTool
                     checkBoxKeepScene.Checked = true;
                 }
             }
-        
         }
 
         private void checkBoxKeepScene_CheckedChanged(object sender, EventArgs e)
