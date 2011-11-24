@@ -46,6 +46,8 @@
             this.menuStrip1 = new System.Windows.Forms.MenuStrip();
             this.fileToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.aboutToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.checkForUpdatesToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.aboutCreditsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.openFileDialog1 = new System.Windows.Forms.OpenFileDialog();
             this.DoRename = new System.Windows.Forms.Button();
             this.checkBoxTVrageLookup = new System.Windows.Forms.CheckBox();
@@ -65,7 +67,6 @@
             this.textBoxSearch = new System.Windows.Forms.TextBox();
             this.textBoxReplace = new System.Windows.Forms.TextBox();
             this.TestSR = new System.Windows.Forms.Button();
-            this.backgroundWorker1 = new System.ComponentModel.BackgroundWorker();
             this.statusStrip1.SuspendLayout();
             this.menuStrip1.SuspendLayout();
             this.contextMenuStrip1.SuspendLayout();
@@ -194,10 +195,26 @@
             // 
             // aboutToolStripMenuItem
             // 
+            this.aboutToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.checkForUpdatesToolStripMenuItem,
+            this.aboutCreditsToolStripMenuItem});
             this.aboutToolStripMenuItem.Name = "aboutToolStripMenuItem";
             this.aboutToolStripMenuItem.Size = new System.Drawing.Size(52, 20);
             this.aboutToolStripMenuItem.Text = "About";
-            this.aboutToolStripMenuItem.Click += new System.EventHandler(this.aboutToolStripMenuItem_Click);
+            // 
+            // checkForUpdatesToolStripMenuItem
+            // 
+            this.checkForUpdatesToolStripMenuItem.Name = "checkForUpdatesToolStripMenuItem";
+            this.checkForUpdatesToolStripMenuItem.Size = new System.Drawing.Size(171, 22);
+            this.checkForUpdatesToolStripMenuItem.Text = "Check for Updates";
+            this.checkForUpdatesToolStripMenuItem.Click += new System.EventHandler(this.checkForUpdatesToolStripMenuItem_Click);
+            // 
+            // aboutCreditsToolStripMenuItem
+            // 
+            this.aboutCreditsToolStripMenuItem.Name = "aboutCreditsToolStripMenuItem";
+            this.aboutCreditsToolStripMenuItem.Size = new System.Drawing.Size(171, 22);
+            this.aboutCreditsToolStripMenuItem.Text = "About / Credits";
+            this.aboutCreditsToolStripMenuItem.Click += new System.EventHandler(this.aboutCreditsToolStripMenuItem_Click);
             // 
             // openFileDialog1
             // 
@@ -453,7 +470,8 @@
         private System.Windows.Forms.TextBox textBoxSearch;
         private System.Windows.Forms.TextBox textBoxReplace;
         private System.Windows.Forms.Button TestSR;
-        private System.ComponentModel.BackgroundWorker backgroundWorker1;
+        private System.Windows.Forms.ToolStripMenuItem checkForUpdatesToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem aboutCreditsToolStripMenuItem;
     }
 }
 

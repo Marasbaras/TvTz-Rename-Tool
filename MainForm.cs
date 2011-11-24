@@ -8,10 +8,12 @@ using System.Linq;
 using System.Text;
 using System.Windows.Forms;
 using System.IO;
+using System.Xml;
 using System.Text.RegularExpressions;
 using System.Configuration;
 using System.Collections.Specialized;
 using System.Diagnostics;
+using System.Threading;
 
 namespace TvTzRenameTool
 {
@@ -80,6 +82,8 @@ namespace TvTzRenameTool
             return ((File.GetAttributes(path) & FileAttributes.Directory) == FileAttributes.Directory);
         }
 
+
+
         private void fileListBox_DragDrop(object sender, DragEventArgs e)
         {
             string[] DropContents = (string[])e.Data.GetData(DataFormats.FileDrop, false);
@@ -126,7 +130,7 @@ namespace TvTzRenameTool
             this.fileListBox.DragEnter += new DragEventHandler(fileListBox_DragEnter);
             this.fileListBox.DragDrop += new DragEventHandler(fileListBox_DragDrop);
 
-                Logger.logError("Debugmode on, you wuss", 1);
+            Logger.logError("Debugmode on, you wuss", 1);
 
             //loading the filebox the neat way to allow later adding of fileTypes through config file or dataset
                 Logger.logError("Loading Containers and SceneNames", 1);
@@ -757,11 +761,16 @@ namespace TvTzRenameTool
 
 
         #region formcontrols
-        private void aboutToolStripMenuItem_Click(object sender, EventArgs e)
+        private void aboutCreditsToolStripMenuItem_Click(object sender, EventArgs e)
         {
             MessageBox.Show("Thanks to: \nEveryone in IRC for keeping up with my spam \n\nSpecial thnx to: \nbitgeek (for listening to my crap) \nNJL61 (for supporting me to finish this tool) \nal7air (for writing the Uploading rule O guide) \nBondoca (for testing the crap out of it) \nTvTz (for being such an awesome TV-Show tracker)");
         }
-        
+
+        private void checkForUpdatesToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            checkForUpdate();
+        }
+
         private void checkBoxTVrageLookup_CheckedChanged(object sender, EventArgs e)
         {
             if (checkBoxTVrageLookup.Checked)
@@ -1061,8 +1070,6 @@ namespace TvTzRenameTool
             toolStripStatusLabel1.Text = "Finished, processed all files !";
         }
 
-        #endregion
-
         private void removeEpInfo_CheckedChanged(object sender, EventArgs e)
         {
             if (removeEpInfo.Checked == true)
@@ -1088,6 +1095,71 @@ namespace TvTzRenameTool
                 }
             }
         }
+        #endregion
+
+        #region updater
+
+        private void checkForUpdate()
+        {
+            Version newVersion = null;
+            string url = "";
+            XmlTextReader reader;
+            try
+            {
+                string xmlURL = Properties.Settings.Default.VersionXML;
+                reader = new XmlTextReader(xmlURL);
+                reader.MoveToContent();
+                string elementName = "";
+                if ((reader.NodeType == XmlNodeType.Element) && (reader.Name == "TvTz-Rename-Tool"))
+                {
+                    while (reader.Read())
+                    {
+                        if (reader.NodeType == XmlNodeType.Element)
+                            elementName = reader.Name;
+                        else
+                        {
+                            if ((reader.NodeType == XmlNodeType.Text) && (reader.HasValue))
+                            {
+                                switch (elementName)
+                                {
+                                    case "version":
+                                    newVersion = new Version(reader.Value);
+                                    break;
+                                    case "url":
+                                    url = reader.Value;
+                                    break;
+                                }
+                            }
+                        }
+                    }
+                    Version curVersion =
+                     System.Reflection.Assembly.GetExecutingAssembly().GetName().Version;
+                    if (curVersion.CompareTo(newVersion) < 0)
+                    {
+                        string title = "New version detected";
+                        string question = "Download the new version?\n\nCurrent version: "+curVersion+"\nUpdate version: "+newVersion+"\n\n(pressing yes will open the download link and close the application)";
+                        if (DialogResult.Yes ==
+                         MessageBox.Show(this, question, title,
+                                         MessageBoxButtons.YesNo,
+                                         MessageBoxIcon.Question))
+                        {
+                            System.Diagnostics.Process.Start(url);
+                            this.Close();
+                        }
+                    }
+                    else
+                    {
+                        MessageBox.Show("You are already on the most recent version: "+ curVersion);
+                    }
+                }
+            }
+            catch (Exception)
+            {
+            }
+        }
+
+        #endregion
+
     }
 
 }

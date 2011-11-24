@@ -77,5 +77,14 @@ namespace TvTzRenameTool.Properties {
                 return ((string)(this["ShowName"]));
             }
         }
+        
+        [global::System.Configuration.ApplicationScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("https://raw.github.com/YaNightmare/TvTz-Rename-Tool/master/version.xml")]
+        public string VersionXML {
+            get {
+                return ((string)(this["VersionXML"]));
+            }
+        }
     }
 }

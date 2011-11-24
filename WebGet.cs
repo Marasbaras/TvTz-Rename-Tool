@@ -7,6 +7,7 @@ using System.IO;
 using System.Text.RegularExpressions;
 using System.Xml;
 using System.Xml.XPath;
+using System.Xml.Serialization;
 
 namespace TvTzRenameTool
 {
@@ -41,6 +42,13 @@ namespace TvTzRenameTool
             get;
             private set;
         }
+
+        public int showid
+        {
+            get;
+            private set;
+        }
+
         #endregion
 
         #region Constructor
@@ -60,28 +68,37 @@ namespace TvTzRenameTool
             epnr = epnr.TrimStart('E');
             season = season.TrimStart('s');
             season = season.TrimStart('S');
+            string sApiKey = "pF7fdBwtutbXFwfr9g5K";
 
-            string URLString = "http://services.tvrage.com/myfeeds/episodeinfo.php?key=pF7fdBwtutbXFwfr9g5K&show=" + episode + "&exact=0&ep=" + season + "x" + epnr;
-
+            string URLepinfo = "http://services.tvrage.com/myfeeds/episodeinfo.php?key=" + sApiKey + "&show=" + episode + "&exact=0&ep=" + season + "x" + epnr;
+            string URLsearch = "http://services.tvrage.com/myfeeds/search.php?key=" + sApiKey + "&show=" + episode;
             try
             {
-                //serialiser ### todo
+
                 XmlDocument xmlDoc = new XmlDocument();
-                xmlDoc.Load(URLString);
+                //Grabbing SID
+                //xmlDoc.Load(URLsearch);
+                //XmlNode showidNode = xmlDoc.SelectSingleNode("//Results/show/showid");
+                //if (showidNode != null) showid = Int32.Parse(showidNode.InnerText);
+
+                //Grabbing episode title and showname
+                xmlDoc.Load(URLepinfo);
                 XmlNode titleNode = xmlDoc.SelectSingleNode("//show/episode/title");
                 if (titleNode != null) webName = titleNode.InnerText;
                 XmlNode showNode = xmlDoc.SelectSingleNode("//show/name");
                 if (showNode != null) webShow = showNode.InnerText;
+
             }
             catch (Exception e)
             {
+
                 if (e.Message.Contains("Unable to connect to the remote server"))
                 {
-                    Logger.logError("TVrage api is down, stacktrace: " + e.ToString() + " searched for " + URLString, 3);
+                    Logger.logError("TVrage api is down, stacktrace: " + e.ToString() + " searched for " + URLepinfo, 3);
                 }
                 else
                 {
-                    Logger.logError("Holy hell, something went wrong with getting stuff from Tvrage, stacktrace " + e.ToString() + " searched for " + URLString, 3);
+                    Logger.logError("Holy hell, something went wrong with getting stuff from Tvrage, stacktrace " + e.ToString() + " searched for " + URLepinfo, 3);
                 }
                 webName = "error";
                 webShow = "error";

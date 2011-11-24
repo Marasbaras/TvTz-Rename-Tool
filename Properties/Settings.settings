@@ -20,5 +20,8 @@
     <Setting Name="ShowName" Type="System.String" Scope="Application">
       <Value Profile="(Default)">ALF,CSI,NY,DEA,FLCL,JAG,CI,SVU,UK,USA,MAD,MASH,NCIS,QI,XL,II,NYC,UFC,UFO,WWE,PPV,RAW,HD,XIII</Value>
     </Setting>
+    <Setting Name="VersionXML" Type="System.String" Scope="Application">
+      <Value Profile="(Default)">https://raw.github.com/YaNightmare/TvTz-Rename-Tool/master/version.xml</Value>
+    </Setting>
   </Settings>
 </SettingsFile>
